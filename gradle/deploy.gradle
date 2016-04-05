@@ -1,0 +1,23 @@
+apply plugin: 'cloudfoundry'
+
+cloudfoundry {
+    target = 'https://api.10.140.207.128.xip.io'
+    organization = "pcf.ctl.io"
+    space = "development"
+    host = "portal-demo"
+    domain = '10.140.207.128.xip.io'
+    file = file("${jar.archivePath}")
+    buildpack = 'https://github.com/cloudfoundry/java-buildpack/'
+    memory = 512
+    instances = 1
+    trustSelfSignedCerts = true
+    variants = ['-blue', '-green']
+
+    services {
+        'p-mysql' {
+            label = 'p-mysql'
+            plan = '100mb-dev'
+            bind = true
+        }
+    }
+}
